@@ -1,0 +1,1 @@
+queues.o: ../queues.c
