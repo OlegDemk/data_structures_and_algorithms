@@ -9,24 +9,24 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#define MAX 100
+#define MAX 4
 
 char *p[MAX];
 char *qretrive(void);
-int spos = 0;
-int rpos = 0;
+int spos = 0;     	// Set pos
+int rpos = 0;		// Read pos
 
 void enter(void);
-void qstore(char *q);
+int qstore(char *q);
 void review(void);
 void delete_ap(void);
 
 int queues(void)
 {
-	char s[80];
+	char s[80];						// String for command
 	register int t;
 
-	for(t = 0; t < MAX; ++t)	// Init array like NULL pointers
+	for(t = 0; t < MAX; ++t)		// Init array like NULL pointers
 	{
 		p[t] = NULL;
 	}
@@ -56,24 +56,29 @@ int queues(void)
 // -------------------------------------------------------------------------
 void enter(void)		// Enter items
 {
-	char s[256], *p;
+	char s[256];		// Buffer for one item
+	char *p;			// Pointer
 	do{
 		printf("Enter mitting %d: ", spos+1);
 		gets(s);
-		if(*s == '0')    // Was if(*s == 0)
+		if(*s == '0')    // EXIT   // Was if(*s == 0)
  		{
 			break;
 		}
-		p = (char *) malloc(strlen(s)+1);
+		p = (char *) malloc(strlen(s)+1);		// malloc memory for 's'
 		if(!p)
 		{
 			printf("Didn't malloc memory \n");
 			return;
 		}
-		strcpy(p, s);
-		if(*s)
+		strcpy(p, s);		// Copy
+		if(*s)				// What it mean???? <<<<<<<<<<<<<<<<<<<<<<<
 		{
-			qstore(p);
+			int status = qstore(p);
+			if(status == 1)
+			{
+				break;
+			}
 		}
 	}while (*s);
 }
@@ -83,7 +88,7 @@ void review(void)
 	register int t;
 	for(t = rpos; t < spos; ++t)
 	{
-		printf("%d. %s\n", t+1, p[t]);
+		printf("%d. %s\n", t+1, p[t]);	 	// вивести дані за показником
 	}
 }
 // -------------------------------------------------------------------------
@@ -97,22 +102,33 @@ void delete_ap(void)
 	printf("%s\n", p);
 }
 // -------------------------------------------------------------------------
-void qstore(char *q)
+int qstore(char *q)
 {
-	if(spos == MAX)
+	if(spos+1 == rpos || (spos+1 == MAX && !rpos))
 	{
-		printf("List full\n");
-		return;
+		printf("List is full\n");
+		return 1;
 	}
-	p[spos] = q;
-	spos ++;
+	p[spos] = q;					/* Записується в масив показників показник на масив
+	з даним запиcом
+	*/
+	spos++;						// Інкремент показника
+	if(spos == MAX)				// Провірка на переповнення
+	{
+		spos = 0;		// Set on the start
+	}
+	return 0;
 }
 // -------------------------------------------------------------------------
 char *qretrive(void)
 {
+	if(rpos == MAX)
+	{
+		spos = 0;
+	}
 	if(rpos == spos)
 	{
-		printf("No any mitting\n");
+		printf("The lish is empty\n");
 		return NULL;
 	}
 	rpos++;
