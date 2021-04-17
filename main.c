@@ -6,9 +6,13 @@
  */
 #include<stdio.h>
 
+#include "pointers.h"
+
 int main()
 {
-	printf("Hello\n\r");
+	printf("Pointers\n\r");
+
+	pointers_on_functions();
 
 	return 0;
 }
