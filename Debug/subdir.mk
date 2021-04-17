@@ -4,14 +4,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../example_of_queues.c \
+../linked_list.c \
 ../main.c \
 ../queues.c 
 
 OBJS += \
+./example_of_queues.o \
+./linked_list.o \
 ./main.o \
 ./queues.o 
 
 C_DEPS += \
+./example_of_queues.d \
+./linked_list.d \
 ./main.d \
 ./queues.d 
 

@@ -21,6 +21,7 @@ int qstore(char *q);
 void review(void);
 void delete_ap(void);
 
+// -------------------------------------------------------------------------
 int queues(void)
 {
 	char s[80];						// String for command
@@ -128,7 +129,7 @@ char *qretrive(void)
 	}
 	if(rpos == spos)
 	{
-		printf("The lish is empty\n");
+		printf("The list is empty\n");
 		return NULL;
 	}
 	rpos++;
