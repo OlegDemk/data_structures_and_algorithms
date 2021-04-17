@@ -11,7 +11,7 @@ typedef struct s_list{
 	int id;							// ID елемента
 	char *name;						// Назва елемента
 
-	struct s_list *next;			// показник на наступну структуру
+	struct s_list   *next;			// показник на наступну структуру
 }t_list;							// Створення елемента t_list з структкри s_list
 
 // -------------------------------------------------------------------------
@@ -34,15 +34,31 @@ void push_front(t_list **list, int set_id, char *set_name)			// Додаванн
 	*list = new_element;			// присвоїти адрес даного елемента списку змінній list
 }
 // -------------------------------------------------------------------------
+void push_back(t_list **list, int set_id, char *set_name)			// Додавання елемента списку в кінець списку
+{
+	t_list *new_element = create_node(set_id, set_name);
+	t_list *tmp = *list;											// Копіювання адресу list в tmp
+	while(tmp -> next != NULL)										// Пошук останнього елемента, яки ні на що не ссилається
+	{
+		tmp = tmp -> next;
+	}
+	// Заипс в адресу останнього елемента списку адрес нового (щойно доданого) елемента
+	tmp -> next = new_element;
+}
+// -------------------------------------------------------------------------
 void linked_list(void)
 {
 	t_list *list = create_node(0, "Name_1");		// Створити один связний список
 
 	// Додавання наступного елементу списку на початок.
-	push_front(&list, 1, "Name_2");					// передається адрес попереднього списку.
-	push_front(&list, 2, "Name_3");
-	push_front(&list, 3, "Name_4");
-	push_front(&list, 4, "Name_5");
+	push_front(&list, 1, "Back_2");					// передається адрес попереднього списку.
+	push_front(&list, 2, "Back_3");
+	push_front(&list, 3, "Back_4");
+	push_front(&list, 4, "Back_5");
+
+	push_back(&list, 5, "Front_6");
+	push_back(&list, 6, "Front_7");
+	push_back(&list, 7, "Front_8");
 
 	while(list != NULL)								// Друкувати елементи допоки вони не ссилаються на NULL
 	{
